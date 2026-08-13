@@ -1,0 +1,5 @@
+[
+  { "id": "sg1", "name": "Singapore", "protocol": "xray", "host": "sg.example.com", "port": 443, "config": {"uuid": "test-uuid"} },
+  { "id": "de1", "name": "Germany", "protocol": "hysteria", "host": "de.example.com", "port": 443, "config": {"up_mbps": 100, "down_mbps": 100} },
+  { "id": "us1", "name": "United States", "protocol": "openvpn", "host": "us.example.com", "port": 1194, "config": {"tcp": false} }
+]

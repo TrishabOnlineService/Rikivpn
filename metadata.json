@@ -1,0 +1,6 @@
+{
+  "name": "Riki Vpn",
+  "description": "Multi-protocol VPN client supporting OpenVPN, Xray, and Hysteria.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
