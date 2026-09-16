@@ -1,0 +1,56 @@
+<resources>
+    <string name="app_name">RikiVpn</string>
+    <string name="tagline">Fast. Private. Secure.</string>
+    <string name="made_in_india">Made in India</string>
+    <string name="by_nitai_studio">by Nitai Studio</string>
+    <string name="support_email">nitai.grp00@gmail.com</string>
+
+    <!-- Onboarding -->
+    <string name="onboard_skip">Skip</string>
+    <string name="onboard_next">Next</string>
+    <string name="onboard_get_started">Get Started</string>
+
+    <string name="onboard1_title">Browse Privately</string>
+    <string name="onboard1_desc">RikiVpn hides your IP and encrypts your traffic so no one can track what you do online.</string>
+
+    <string name="onboard2_title">Blazing Fast Servers</string>
+    <string name="onboard2_desc">Connect in one tap and enjoy smooth, buffer-free browsing and streaming.</string>
+
+    <string name="onboard3_title">Proudly Made in India</string>
+    <string name="onboard3_desc">Built with care by Nitai Studio — reliable, simple, and made for you.</string>
+
+    <!-- Main -->
+    <string name="connect_vpn">Connect VPN</string>
+    <string name="disconnect_vpn">Disconnect</string>
+    <string name="connecting">Connecting…</string>
+    <string name="disconnecting">Disconnecting…</string>
+    <string name="session_usage">Session Usage</string>
+    <string name="not_connected">Not connected</string>
+    <string name="privacy_policy_disclaimer">Privacy Policy &amp; Disclaimer</string>
+
+    <!-- Legal -->
+    <string name="legal_title">Privacy Policy &amp; Disclaimer</string>
+
+    <!-- Feature 3: Drawer -->
+    <string name="nav_menu">Menu</string>
+    <string name="nav_support">Support</string>
+
+    <!-- Feature 1: Select Location -->
+    <string name="select_location_title">Select Location</string>
+    <string name="tab_select_location">Select Location</string>
+    <string name="tab_free_servers">Free Servers</string>
+    <string name="tab_premium_servers">Premium Servers</string>
+
+    <!-- Ads (replaces the old subscription paywall - every server is free now) -->
+    <string name="watch_ads_to_unlock">Watch a few ads to connect to this server</string>
+    <string name="watch_ads_progress">Loading ads… (%1$d ads)</string>
+
+    <!-- Feature 3: About -->
+    <string name="about_title">About</string>
+    <string name="about_brand_line">Made in India \u00B7 Nitai Studio</string>
+    <string name="version_format">Version %1$s</string>
+
+    <!-- Feature 3: Disclaimer -->
+    <string name="disclaimer_title">Disclaimer</string>
+    <string name="disclaimer_body">RikiVpn (\"the App\") is developed and published by Nitai Studio, an independent Indian app development studio. RikiVpn is provided \"as is\" for general privacy and network-connectivity purposes. It is not intended to facilitate, and must not be used for, any unlawful activity. Nitai Studio does not guarantee uninterrupted, error-free, or unrestricted access to any server, website, or online service while the VPN is active, and is not responsible for content accessed by users through the App.\n\nAll servers, free and premium, are available to every user at no cost and are supported entirely by ads. Premium servers may show a short sequence of ads before connecting.\n\nFor questions, contact us at %1$s.</string>
+</resources>
