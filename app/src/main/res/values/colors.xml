@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Legacy (kept for compatibility) -->
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- RikiVpn brand palette -->
+    <color name="riki_bg_top">#0B1330</color>
+    <color name="riki_bg_bottom">#1A2560</color>
+    <color name="riki_surface">#131B3A</color>
+    <color name="riki_surface_alt">#1C2650</color>
+    <color name="riki_accent">#00E5C7</color>
+    <color name="riki_accent_dark">#00B39C</color>
+    <color name="riki_text_primary">#F5F7FF</color>
+    <color name="riki_text_secondary">#9AA4C7</color>
+    <color name="riki_disconnected">#64708F</color>
+    <color name="riki_danger">#FF5D73</color>
+    <color name="riki_success">#22D48A</color>
+
+    <!-- India tricolor accents (used sparingly, e.g. "Made in India" badge) -->
+    <color name="india_saffron">#FF9933</color>
+    <color name="india_white">#FFFFFF</color>
+    <color name="india_green">#138808</color>
+    <color name="india_navy">#000080</color>
+
+    <!-- Connect button -->
+    <color name="connect_button_color">#00E5C7</color>
+    <color name="connect_button_text">#0B1330</color>
+    <color name="server_card_bg_color">#131B3A</color>
+</resources>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/riki_bg_top"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_back"
+                android:contentDescription="@string/onboard_skip" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="@string/select_location_title"
+                android:textColor="@color/riki_text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            app:tabIndicatorColor="@color/riki_accent"
+            app:tabSelectedTextColor="@color/riki_accent"
+            app:tabTextColor="@color/riki_text_secondary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerServers"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp" />
+
+        <!-- Feature 5: banner ad slot, bottom of Select Location screen. -->
+        <FrameLayout
+            android:id="@+id/adBannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="50dp" />
+
+    </LinearLayout>
+
+    <!-- Shown while the premium 5-ad unlock sequence plays (see SelectLocationActivity). -->
+    <FrameLayout
+        android:id="@+id/adUnlockOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CC000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/riki_accent" />
+
+            <TextView
+                android:id="@+id/tvAdUnlockStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

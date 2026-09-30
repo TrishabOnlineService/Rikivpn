@@ -1,0 +1,105 @@
+plugins {
+    alias(libs.plugins.android.application)
+}
+
+android {
+    namespace 'com.rikivpn.nitaistudio'
+    compileSdk 36
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.rikivpn.nitaistudio"
+        minSdk 24
+        targetSdk 36
+        versionCode Integer.parseInt(System.getenv("VERSION_CODE") ?: "1")
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    signingConfigs {
+        // Release key comes from CI secrets / environment (never commit the keystore).
+        release {
+            def ksPath = System.getenv("KEYSTORE_PATH")
+            if (ksPath != null && file(ksPath).exists()) {
+                storeFile file(ksPath)
+                storePassword System.getenv("KEYSTORE_PASSWORD")
+                keyAlias System.getenv("KEY_ALIAS")
+                keyPassword System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // Real upload key when KEYSTORE_PATH is set (CI secrets); otherwise debug key
+            // (installable for testing, but Google Play will REJECT a debug-signed bundle).
+            signingConfig System.getenv("KEYSTORE_PATH") ? signingConfigs.release : signingConfigs.debug
+        }
+    }
+
+    lint {
+        // Lint must never block CI builds (lintVitalRelease runs on assembleRelease)
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+}
+
+// Some libraries (RikiVpn SDK / StartApp SDK) pull the NEWEST androidx versions, which need
+// a newer AGP / compileSdk. Pin them to versions that work with AGP 8.9.1 + compileSdk 36.
+configurations.configureEach {
+    resolutionStrategy {
+        force 'androidx.core:core:1.13.1'
+        force 'androidx.core:core-ktx:1.13.1'
+        force 'androidx.webkit:webkit:1.12.1'
+        force 'androidx.activity:activity:1.9.3'
+        force 'androidx.activity:activity-ktx:1.9.3'
+        force 'androidx.annotation:annotation:1.8.2'
+        force 'androidx.fragment:fragment:1.8.5'
+        force 'androidx.fragment:fragment-ktx:1.8.5'
+        force 'androidx.appcompat:appcompat:1.7.0'
+        force 'androidx.appcompat:appcompat-resources:1.7.0'
+    }
+}
+
+dependencies {
+    implementation libs.activity.ktx
+    implementation libs.appcompat
+    implementation libs.constraintlayout
+    implementation libs.material
+    implementation libs.viewpager2
+
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
+
+    testImplementation libs.junit
+    androidTestImplementation libs.espresso.core
+    androidTestImplementation libs.ext.junit
+
+    // BongoVPN (official artifact on Maven Central)
+    implementation 'ai.bongotech:bongovpn:1.0.2'
+
+    // Start.io Ads (published on Maven Central)
+    implementation "com.startapp:inapp-sdk:5.3.1"
+
+    // Explicit Start.io transitive dependencies
+    implementation "com.google.android.gms:play-services-appset:16.1.0"
+    implementation "androidx.webkit:webkit:1.12.1"
+}
