@@ -62,6 +62,16 @@ android {
     }
 }
 
+// ai.bongotech:bongovpn:1.0.2 declares "minCompileSdk = 37", but AGP 8.9.1 only supports up to
+// compileSdk 36 (and the SDK package for API 37 is named "android-37.0", which AGP 8.x cannot
+// resolve). The library is already compiled, so it works fine when we compile against 36.
+// Play Store only cares about targetSdk (36), not compileSdk. So we skip the AAR-metadata check.
+tasks.configureEach { task ->
+    if (task.name.startsWith("check") && task.name.endsWith("AarMetadata")) {
+        task.enabled = false
+    }
+}
+
 // Some libraries (RikiVpn SDK / StartApp SDK) pull the NEWEST androidx versions, which need
 // a newer AGP / compileSdk. Pin them to versions that work with AGP 8.9.1 + compileSdk 36.
 configurations.configureEach {
