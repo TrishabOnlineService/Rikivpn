@@ -1,0 +1,18 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.RikiVpn" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/riki_accent</item>
+        <item name="colorPrimaryDark">@color/riki_bg_top</item>
+        <item name="colorSecondary">@color/riki_accent</item>
+        <item name="android:statusBarColor">@color/riki_bg_top</item>
+        <item name="android:navigationBarColor">@color/riki_bg_top</item>
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
+
+    <style name="Theme.RikiVpn" parent="Base.Theme.RikiVpn" />
+
+    <!-- Splash theme: fullscreen, no action bar, brand background -->
+    <style name="Theme.RikiVpn.Splash" parent="Theme.RikiVpn">
+        <item name="android:windowBackground">@drawable/bg_splash_gradient</item>
+    </style>
+</resources>

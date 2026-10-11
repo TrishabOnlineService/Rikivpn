@@ -1,0 +1,105 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build APK & AAB
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      # Use the Android SDK that is already installed on ubuntu-latest runners.
+      # (android-actions/setup-android was failing while downloading/accepting licenses.)
+      - name: Install required Android SDK packages
+        run: |
+          export ANDROID_HOME="${ANDROID_HOME:-/usr/local/lib/android/sdk}"
+          SDKMANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          yes | "$SDKMANAGER" --licenses > /dev/null || true
+          "$SDKMANAGER" --install "platform-tools" "build-tools;35.0.0" "platforms;android-36"
+          echo "ANDROID_HOME=$ANDROID_HOME" >> "$GITHUB_ENV"
+          echo "ANDROID_SDK_ROOT=$ANDROID_HOME" >> "$GITHUB_ENV"
+
+      - name: Set up Gradle (cache)
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      # Play Store needs an AAB signed with YOUR upload key. Add these repo secrets:
+      # KEYSTORE_BASE64, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
+      - name: Decode release keystore (if secret exists)
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        run: |
+          if [ -n "$KEYSTORE_BASE64" ]; then
+            echo "$KEYSTORE_BASE64" | base64 -d > "$RUNNER_TEMP/release.jks"
+            echo "KEYSTORE_PATH=$RUNNER_TEMP/release.jks" >> "$GITHUB_ENV"
+          else
+            echo "::warning::KEYSTORE_BASE64 secret not set - release AAB/APK will be DEBUG-signed and Google Play will reject it."
+          fi
+
+      - name: Build Debug APK, Release APK and Release AAB
+        env:
+          VERSION_CODE: ${{ github.run_number }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew assembleDebug assembleRelease bundleRelease --no-daemon --stacktrace
+
+      # Google Play requires 16 KB page-size support for apps targeting Android 15+.
+      - name: Check native libs are 16 KB aligned (warning only)
+        run: |
+          APK=$(ls app/build/outputs/apk/release/*.apk | head -1)
+          rm -rf /tmp/apkx && mkdir -p /tmp/apkx
+          unzip -q -o "$APK" 'lib/*' -d /tmp/apkx || { echo "No native libs found"; exit 0; }
+          for f in $(find /tmp/apkx/lib/arm64-v8a /tmp/apkx/lib/x86_64 -name '*.so' 2>/dev/null); do
+            min=$(readelf -lW "$f" | awk '$1=="LOAD"{print $NF}' | while read a; do printf "%d\n" "$a"; done | sort -n | head -1)
+            if [ "${min:-0}" -lt 16384 ]; then
+              echo "::warning::$f is NOT 16 KB aligned (align=$min)"
+            else
+              echo "OK  $f (align=$min)"
+            fi
+          done
+
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+          if-no-files-found: warn
+
+      - name: Upload Release APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: app/build/outputs/apk/release/*.apk
+          if-no-files-found: warn
+
+      - name: Upload Release AAB (upload this to Play Console)
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-aab
+          path: app/build/outputs/bundle/release/*.aab
+          if-no-files-found: warn
+
+      - name: Upload build reports (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-reports
+          path: app/build/reports/
+          if-no-files-found: ignore

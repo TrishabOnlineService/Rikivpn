@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:paddingHorizontal="36dp">
+
+    <FrameLayout
+        android:id="@+id/iconFrame"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:background="@drawable/circle_icon_bg">
+
+        <ImageView
+            android:id="@+id/ivIcon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:contentDescription="@null" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="@color/riki_text_primary"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Browse Privately" />
+
+    <TextView
+        android:id="@+id/tvDesc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:lineSpacingExtra="4dp"
+        android:textColor="@color/riki_text_secondary"
+        android:textSize="15sp"
+        tools:text="RikiVpn hides your IP and encrypts your traffic so no one can track what you do online." />
+
+</LinearLayout>
