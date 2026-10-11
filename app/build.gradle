@@ -16,8 +16,8 @@ android {
         applicationId "com.rikivpn.nitaistudio"
         minSdk 24
         targetSdk 36
-        versionCode Integer.parseInt(System.getenv("VERSION_CODE") ?: "1")
-        versionName "1.1"
+        versionCode Integer.parseInt(System.getenv("VERSION_CODE") ?: "2")
+        versionName "2"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
